@@ -1,5 +1,6 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import butterflyImage from "../assets/butterfly.png";
 import "./Home.css";
 
 const TREE_CHALLENGE_STORAGE_KEY = "selectedTreeChallenge";
@@ -18,6 +19,22 @@ type ActiveTimer = {
   goalMinutes: number;
   communityCode: string;
 };
+
+type ButterflyDecoration = {
+  top: string;
+  left: string;
+  width: string;
+  rotation: number;
+};
+
+function createButterflyDecorations(): ButterflyDecoration[] {
+  return Array.from({ length: 8 }, () => ({
+    top: `${Math.floor(Math.random() * 90)}%`,
+    left: `${Math.floor(Math.random() * 90)}%`,
+    width: `${80 + Math.floor(Math.random() * 81)}px`,
+    rotation: Math.floor(Math.random() * 50) - 25,
+  }));
+}
 
 function readActiveTimer(communityCode: string | null): ActiveTimer | null {
   const savedTimer = localStorage.getItem(ACTIVE_TIMER_STORAGE_KEY);
@@ -117,6 +134,7 @@ async function requestTreeChallenge(communityCode: string): Promise<TreeChalleng
 function Home() {
   const navigate = useNavigate();
   const selectedCommunity = localStorage.getItem("selectedCommunity");
+  const [butterflies] = useState(createButterflyDecorations);
   const [goalMinutes, setGoalMinutes] = useState(
     () => String(readActiveTimer(selectedCommunity)?.goalMinutes ?? 30),
   );
@@ -219,6 +237,23 @@ function Home() {
   }
 
   const goalReached = startedAt !== null && elapsedSeconds >= goalSeconds;
+  const butterflyBackground = (
+    <div className="butterfly-background" aria-hidden="true">
+      {butterflies.map((butterfly, index) => (
+        <img
+          key={index}
+          src={butterflyImage}
+          alt=""
+          style={{
+            top: butterfly.top,
+            left: butterfly.left,
+            width: butterfly.width,
+            transform: `rotate(${butterfly.rotation}deg)`,
+          }}
+        />
+      ))}
+    </div>
+  );
 
   if (startedAt === null) {
     return (
@@ -255,6 +290,7 @@ function Home() {
 
   return (
     <main className="home-page outdoor-dashboard">
+      {butterflyBackground}
       <aside className="elapsed-widget" aria-label="Outdoor timer">
         <span className="elapsed-label">Minutes outside</span>
         <span className="elapsed-time" aria-live="off">

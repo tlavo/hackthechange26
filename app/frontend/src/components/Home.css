@@ -4,10 +4,19 @@
 }
 
 .timer-setup {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+}
+
+.timer-setup > :not(.butterfly-background) {
+  position: relative;
+  z-index: 1;
 }
 
 .timer-setup h1,
@@ -61,16 +70,16 @@
 
 .outdoor-dashboard {
   position: relative;
-  display: grid;
+  display: flex;
   min-height: 480px;
   max-width: 960px;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .elapsed-widget {
-  position: absolute;
-  top: 24px;
-  right: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,6 +90,7 @@
   background: #263b04;
   color: #fffef5;
   box-shadow: 0 8px 20px rgb(38 59 4 / 18%);
+  margin-left: 80px;
 }
 
 .elapsed-label {
@@ -93,14 +103,33 @@
   letter-spacing: 0.02em;
 }
 
+.butterfly-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.butterfly-background img {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.32;
+}
+
 .elapsed-goal {
   color: #e0e8c1;
   font-size: 0.75rem;
 }
 
 .tree-challenge {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: min(100%, 560px);
+  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   gap: 20px;
@@ -190,20 +219,20 @@
   }
 
   .outdoor-dashboard {
-    display: flex;
     min-height: auto;
-    flex-direction: column;
     align-items: stretch;
     gap: 24px;
   }
 
   .elapsed-widget {
-    position: static;
-    align-self: flex-end;
+    align-self: flex-start;
   }
 
   .tree-challenge {
-    box-sizing: border-box;
     padding: 28px 20px;
+  }
+
+  .butterfly-background img {
+    width: 80px;
   }
 }
