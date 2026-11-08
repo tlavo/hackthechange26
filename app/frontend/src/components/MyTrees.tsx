@@ -31,14 +31,6 @@ function MyTrees() {
                     &gt; View tree reviews
                 </button>
             </div>
-
-
-
-
-
-
-
-
             <div className="treeBox">
                 SPRUCE, WHITE (51.081912581934084&deg; N, 114.1835750113717&deg; W)
                 <div className="buttonBox">

@@ -7,12 +7,7 @@
     color: white;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     flex-direction: column;
-    /* padding-top: 1px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 10px; */
     padding:4%;
     margin: 8px;
     border-radius: 8px;
@@ -38,18 +33,6 @@
     border-radius: 8px;
     margin: 2px;
 }
-
-/* .pinBox {
-    background-color: #8DA432;
-}
-
-.reviewBox {
-    background-color: #8DA432;
-}
-
-.reportBox {
-    background-color: #8DA432;
-} */
 
 .dropdown {
     border: none;
