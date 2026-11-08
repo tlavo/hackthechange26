@@ -45,10 +45,26 @@
   }
 }
 
+/* Opt-in to the modern, customizable select box */
+select,
+::picker(select) {
+  appearance: base-select;
+  box-sizing: border-box;
+}
+
 .welcome-page select {
+  border-radius: 0%;
   width: 273px;
   padding: 10px;
   background-color: #FEFFDB;
+}
+
+/* styles the popup window */
+::picker(select) {
+  width: 273px;
+  background-color: #FEFFDB;
+  height: 200px;
+  overflow-y: auto;
 }
 
 .welcome-page button {
