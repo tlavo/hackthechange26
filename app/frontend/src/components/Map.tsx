@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import './Map.css';
 import "leaflet/dist/leaflet.css";
 import {
@@ -13,29 +14,47 @@ import L from 'leaflet';
 import treeIconImg from '../assets/tree.png';
 
 const COMMUNITY_STORAGE_KEY = "selectedCommunity";
+const TREE_CHALLENGE_STORAGE_KEY = "selectedTreeChallenge";
 
 interface Tree {
-    tree_id: number;
+    tree_id: string;
     latitude: number;
     longitude: number;
     common_name: string;
 }
 
-// Fall back to these trees if we cannot fetch data
-const MOCK_TREES: Tree[] = [
-    {
-        "tree_id": 1,
-        "latitude": 51.08,
-        "longitude": -114.16,
-        "common_name": "Cool Tree"
-    },
-    {
-        "tree_id": 2,
-        "latitude": 51.10,
-        "longitude": -114.26,
-        "common_name": "Cooler Tree"
+interface StoredTreeChallenge {
+    community_code: string;
+    common_name: string;
+}
+
+function getStoredTreeChallenge(): StoredTreeChallenge | null {
+    const storedChallenge = localStorage.getItem(TREE_CHALLENGE_STORAGE_KEY);
+    if (!storedChallenge) {
+        return null;
     }
-];
+
+    try {
+        const parsed: unknown = JSON.parse(storedChallenge);
+        if (
+            typeof parsed === "object" &&
+            parsed !== null &&
+            "community_code" in parsed &&
+            typeof parsed.community_code === "string" &&
+            "common_name" in parsed &&
+            typeof parsed.common_name === "string"
+        ) {
+            return {
+                community_code: parsed.community_code,
+                common_name: parsed.common_name,
+            };
+        }
+    } catch {
+        localStorage.removeItem(TREE_CHALLENGE_STORAGE_KEY);
+    }
+
+    return null;
+}
 
 function RecenterMap({ center }: { center: LatLngTuple }) {
     const map = useMap();
@@ -47,10 +66,19 @@ function RecenterMap({ center }: { center: LatLngTuple }) {
 
 function Map() {
     const [center, setCenter] = useState<LatLngTuple>([51.078621, -114.136719]); // default: UofC
+    const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const [retryCount, setRetryCount] = useState(0);
-    const [trees, setTrees] = useState<Tree[]>(MOCK_TREES);
+    const [trees, setTrees] = useState<Tree[]>([]);
+    const storedChallenge = getStoredTreeChallenge();
+    const communityCode =
+        searchParams.get("community_code") ||
+        storedChallenge?.community_code ||
+        localStorage.getItem(COMMUNITY_STORAGE_KEY) ||
+        "";
+    const commonName =
+        searchParams.get("common_name") || storedChallenge?.common_name || "";
 
     // Calculates the average latitude and longitude whenever the trees array changes
     useEffect(() => {
@@ -88,10 +116,16 @@ function Map() {
             setError("");
 
             try {
-                const savedCommunity = localStorage.getItem(COMMUNITY_STORAGE_KEY) || "";
-                const url = savedCommunity
-                    ? `/api/trees?community_code=${encodeURIComponent(savedCommunity)}`
-                    : "/api/trees";
+                const params = new URLSearchParams();
+                params.set("limit", "1000");
+                if (communityCode) {
+                    params.set("community_code", communityCode);
+                }
+                if (commonName) {
+                    params.set("common_name", commonName);
+                }
+                const query = params.toString();
+                const url = query ? `/api/trees?${query}` : "/api/trees";
 
                 const response = await fetch(url, {
                     signal: controller.signal,
@@ -126,8 +160,6 @@ function Map() {
                             ? loadError.message
                             : "Unable to load trees."
                     );
-                    // Retain mock data on failure, or fallback safely:
-                    if (trees.length === 0) setTrees(MOCK_TREES);
                 }
             } finally {
                 if (!controller.signal.aborted) {
@@ -138,7 +170,7 @@ function Map() {
 
         void loadTrees();
         return () => controller.abort();
-    }, [retryCount]);
+    }, [retryCount, communityCode, commonName]);
 
     return (
         <div style={{ position: "relative", width: "100%", height: "100%" }}>
@@ -156,6 +188,13 @@ function Map() {
                 </div>
             )}
 
+            {commonName && (
+                <div className="map-filter-label">
+                    Showing {commonName} trees
+                    {communityCode ? ` in ${communityCode}` : ""}
+                </div>
+            )}
+
             <MapContainer center={center} zoom={16} scrollWheelZoom={false}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -166,7 +205,7 @@ function Map() {
                 <RecenterMap center={center} />
 
                 {/* Render markers regardless of loading state so fallback mock trees show */}
-                {trees.map((tree) => (
+                {!isLoading && trees.map((tree) => (
                     <Marker key={tree.tree_id} position={[tree.latitude, tree.longitude]} icon={treeIcon}>
                         <Popup>
                             <strong>{tree.common_name || 'Tree Location'}</strong> <br />
@@ -178,7 +217,7 @@ function Map() {
                 <Marker position={center} icon={violetIcon}>
                     <Popup>
                         <strong>Trees' Center Location</strong> <br />
-                        Community: {localStorage.getItem(COMMUNITY_STORAGE_KEY)}
+                        Community: {communityCode || "All communities"}
                     </Popup>
                 </Marker>
             </MapContainer>

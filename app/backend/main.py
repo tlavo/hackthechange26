@@ -44,7 +44,7 @@ def get_trees(
     # Filter by common name if one was provided.
     if common_name:
         statement = statement.where(
-            Tree.common_name == common_name.strip().upper()
+            func.upper(Tree.common_name) == common_name.strip().upper()
         )
 
     # Apply pagination.

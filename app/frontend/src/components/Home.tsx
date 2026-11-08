@@ -1,6 +1,8 @@
 import { useEffect, useState, type ChangeEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
+
+const TREE_CHALLENGE_STORAGE_KEY = "selectedTreeChallenge";
 
 type TreeChallenge = {
   community_code: string;
@@ -26,6 +28,7 @@ function isTreeChallenge(data: unknown): data is TreeChallenge {
 }
 
 function Home() {
+  const navigate = useNavigate();
   const selectedCommunity = localStorage.getItem("selectedCommunity");
   const [goalMinutes, setGoalMinutes] = useState("30");
   const [startedAt, setStartedAt] = useState<number | null>(null);
@@ -62,6 +65,7 @@ function Home() {
     setChallengeLoading(true);
     setChallengeError("");
     setChallenge(null);
+    localStorage.removeItem(TREE_CHALLENGE_STORAGE_KEY);
 
     try {
       const response = await fetch(
@@ -74,6 +78,7 @@ function Home() {
       const data: unknown = await response.json();
       if (isTreeChallenge(data)) {
         setChallenge(data);
+        localStorage.setItem(TREE_CHALLENGE_STORAGE_KEY, JSON.stringify(data));
         return;
       }
 
@@ -230,7 +235,21 @@ function Home() {
         >
           End session
         </button>
-        <button>Find tree on map</button>
+        {challenge && (
+          <button
+            className="timer-button"
+            type="button"
+            onClick={() => {
+              const params = new URLSearchParams({
+                community_code: challenge.community_code,
+                common_name: challenge.common_name,
+              });
+              navigate(`/map?${params.toString()}`);
+            }}
+          >
+            Show {challenge.common_name} trees on map
+          </button>
+        )}
       </section>
     </main>
   );
