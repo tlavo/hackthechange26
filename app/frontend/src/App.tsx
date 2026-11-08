@@ -36,8 +36,8 @@ function App() {
 
 
         <nav className="navbar">
-          
-          
+
+
         </nav>
         <div>
           <h1>Get started</h1>
