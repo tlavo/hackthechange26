@@ -7,11 +7,11 @@ export default function NavBar() {
             <div className="navtab">
                 <NavLink className="navtab" to="/home">Home</NavLink>
             </div>
-            
+
             <div className="navtab">
                 <NavLink className="navtab" to="/map">Map</NavLink>
             </div>
-        
+
             <div className="navtab">
                 <NavLink className="navtab" to="/trees">Trees</NavLink>
             </div>

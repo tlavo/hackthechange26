@@ -5,10 +5,11 @@ import "./MyTrees.css"
 
 function MyTrees() {
     return (
-        <div>
-            <div className="top">
+        <main className="my-trees-page">
+            <h1>Trees you've found!</h1>
+            {/* <div className="top">
                 Trees you've found!
-            </div>
+            </div> */}
             <div className="treeBox">
                 <div>
                     MAPLE, RED (51.097562076155505&deg; N, 114.2292965523886&deg; W)
@@ -71,7 +72,7 @@ function MyTrees() {
                     &gt; View tree reviews
                 </button>
             </div>
-        </div>
+        </main>
     );
 }
 

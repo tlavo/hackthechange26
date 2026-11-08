@@ -1,7 +1,6 @@
 .home-page {
-  max-width: 720px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 48px 10px;
 }
 
 .timer-setup {
@@ -145,9 +144,10 @@
   padding: 12px 20px;
   border: 0;
   border-radius: 999px;
-  background: #365006;
+  background: #456B19;
   color: white;
-  font: inherit;
+  font-size: large;
+  font-family: "Aleo", serif;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 150ms ease, transform 150ms ease;
@@ -155,7 +155,7 @@
 
 .timer-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  background: #4a6b0c;
+  background: #5a8825;
 }
 
 .timer-button:disabled {

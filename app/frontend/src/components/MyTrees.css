@@ -1,6 +1,14 @@
-.top {
-    text-align: center;
+.my-trees-page {
+    padding: 0 10px;
 }
+
+.my-trees-page h1 {
+    color: #263b04;
+}
+
+/* .top {
+    text-align: center;
+} */
 
 .treeBox {
     background-color: #925E08;
@@ -8,14 +16,14 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding:4%;
+    padding: 4%;
     margin: 8px;
     border-radius: 8px;
 }
 
-.treeBox > div {
+.treeBox>div {
     display: flex;
-    
+
 }
 
 .buttonBox {
@@ -25,7 +33,7 @@
     width: 100%;
 }
 
-.buttonBox > button {
+.buttonBox>button {
     background-color: #8DA432;
     border: none;
     text-align: center;
