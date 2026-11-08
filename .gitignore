@@ -1,0 +1,7 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+
+# Local SQLite database (recreated by app/backend/import_trees.py)
+app/backend/app.db
