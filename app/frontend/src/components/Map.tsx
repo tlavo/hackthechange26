@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import './Map.css';
 import "leaflet/dist/leaflet.css";
 import {
@@ -65,6 +65,7 @@ function RecenterMap({ center }: { center: LatLngTuple }) {
 }
 
 function Map() {
+    const navigate = useNavigate();
     const [center, setCenter] = useState<LatLngTuple>([51.078621, -114.136719]); // default: UofC
     const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState(true);
@@ -232,21 +233,60 @@ function Map() {
             )}
 
             <section className="location-verification" aria-label="Location verification">
-                <button
-                    className="location-verification-button"
-                    type="button"
-                    onClick={verifyLocation}
-                    disabled={locationStatus === "requesting"}
-                >
-                    {locationStatus === "requesting"
-                        ? "Requesting location..."
-                        : "Verify I'm at a tree"}
-                </button>
-                <p className={`location-verification-message is-${locationStatus}`} role="status" aria-live="polite">
-                    {locationStatus === "idle"
-                        ? "Your browser will ask permission to access your location."
-                        : locationMessage}
-                </p>
+                {locationStatus === "success" ? (
+                    <div className="location-success-actions">
+                        <p
+                            className="location-verification-message is-success"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            {locationMessage}
+                        </p>
+                        <button
+                            className="location-verification-button"
+                            type="button"
+                            onClick={() => navigate("/home")}
+                        >
+                            Back
+                        </button>
+                        <button
+                            className="location-verification-button"
+                            type="button"
+                            disabled
+                        >
+                            Favourite
+                        </button>
+                        <button
+                            className="location-verification-button"
+                            type="button"
+                            disabled
+                        >
+                            Something wrong with Tree? Let us know.
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        <button
+                            className="location-verification-button"
+                            type="button"
+                            onClick={verifyLocation}
+                            disabled={locationStatus === "requesting"}
+                        >
+                            {locationStatus === "requesting"
+                                ? "Requesting location..."
+                                : "Verify I'm at a tree"}
+                        </button>
+                        <p
+                            className={`location-verification-message is-${locationStatus}`}
+                            role="status"
+                            aria-live="polite"
+                        >
+                            {locationStatus === "idle"
+                                ? "Your browser will ask permission to access your location."
+                                : locationMessage}
+                        </p>
+                    </>
+                )}
             </section>
 
             <MapContainer center={center} zoom={16} scrollWheelZoom={false}>

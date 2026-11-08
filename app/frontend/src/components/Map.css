@@ -65,6 +65,16 @@
     cursor: pointer;
 }
 
+.location-success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.location-success-actions .location-verification-message {
+    margin: 0 0 4px;
+}
+
 .location-verification-button:hover:not(:disabled) {
     background: #4a6b0c;
 }
@@ -75,8 +85,9 @@
 }
 
 .location-verification-button:disabled {
-    cursor: wait;
-    opacity: 0.75;
+    background: #9da58b;
+    cursor: not-allowed;
+    opacity: 0.85;
 }
 
 .location-verification-message {
