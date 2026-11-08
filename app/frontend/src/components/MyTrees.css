@@ -1,0 +1,54 @@
+.top {
+    text-align: center;
+}
+
+.treeBox {
+    background-color: #925E08;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding:4%;
+    margin: 8px;
+    border-radius: 8px;
+}
+
+.treeBox > div {
+    display: flex;
+    
+}
+
+.buttonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.buttonBox > button {
+    background-color: #8DA432;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    margin: 2px;
+}
+
+.dropdown {
+    border: none;
+    background-color: transparent;
+}
+
+.treeInfoBox {
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-align: left;
+}
+
+.treeReviewBox {
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-align: left;
+}
