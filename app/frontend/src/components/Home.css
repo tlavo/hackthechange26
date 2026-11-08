@@ -1,0 +1,209 @@
+.home-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.timer-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.timer-setup h1,
+.tree-challenge h1 {
+  margin: 0;
+  color: #263b04;
+}
+
+.timer-eyebrow {
+  margin: 0 0 8px;
+  color: #71882a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.goal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #263b04;
+  font-weight: 700;
+}
+
+.goal-field input {
+  width: 140px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #aeb986;
+  border-radius: 10px;
+  background: white;
+  color: #263b04;
+  font: inherit;
+}
+
+.goal-field input:focus-visible,
+.timer-button:focus-visible {
+  outline: 3px solid #8da432;
+  outline-offset: 3px;
+}
+
+.goal-field input:disabled {
+  background: #f0f1e9;
+  color: #666;
+}
+
+.elapsed-time {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.outdoor-dashboard {
+  position: relative;
+  display: grid;
+  min-height: 480px;
+  max-width: 960px;
+  place-items: center;
+}
+
+.elapsed-widget {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 150px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #263b04;
+  color: #fffef5;
+  box-shadow: 0 8px 20px rgb(38 59 4 / 18%);
+}
+
+.elapsed-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.elapsed-widget .elapsed-time {
+  font-size: 1.8rem;
+  letter-spacing: 0.02em;
+}
+
+.elapsed-goal {
+  color: #e0e8c1;
+  font-size: 0.75rem;
+}
+
+.tree-challenge {
+  display: flex;
+  width: min(100%, 560px);
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+  border: 1px solid #d6dcae;
+  border-radius: 20px;
+  background: #fffef5;
+  box-shadow: 0 12px 32px rgb(54 80 6 / 12%);
+  text-align: center;
+}
+
+.tree-challenge .timer-eyebrow {
+  margin: 0;
+}
+
+.challenge-result h2 {
+  margin: 0 0 12px;
+  color: #365006;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.challenge-result p {
+  margin: 0;
+  color: #5c624c;
+}
+
+.challenge-result strong {
+  color: #365006;
+}
+
+.challenge-error {
+  color: #9c2c20;
+}
+
+.challenge-error p {
+  margin: 0 0 12px;
+}
+
+.timer-button {
+  min-width: 140px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #365006;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.timer-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #4a6b0c;
+}
+
+.timer-button:disabled {
+  background: #9da58b;
+  cursor: not-allowed;
+}
+
+.timer-button-secondary {
+  background: #68704f;
+}
+
+.timer-status {
+  min-height: 1.5em;
+  margin: 0;
+  color: #5c624c;
+}
+
+.timer-status.is-running {
+  color: #365006;
+  font-weight: 600;
+}
+
+.timer-status.is-complete {
+  color: #365006;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+@media (max-width: 520px) {
+  .home-page {
+    padding: 24px 16px;
+  }
+
+  .outdoor-dashboard {
+    display: flex;
+    min-height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .elapsed-widget {
+    position: static;
+    align-self: flex-end;
+  }
+
+  .tree-challenge {
+    box-sizing: border-box;
+    padding: 28px 20px;
+  }
+}
