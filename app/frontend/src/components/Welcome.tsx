@@ -76,55 +76,64 @@ function Welcome() {
     }
 
     return (
-        <main className="welcome-page">
-            <h1>Welcome to App Name</h1>
-            <p>Select your community to get started.</p>
+        <main className="welcome-main">
+            <div className="welcome-page">
+                <h1 className="title">Root Routes</h1>
 
-            <label htmlFor="community-select">Select Community</label>
-            <select
-                id="community-select"
-                value={selectedCommunity}
-                onChange={handleCommunityChange}
-                disabled={isLoading || communities.length === 0}
-            >
-                <option value="">
-                    {isLoading ? "Loading communities..." : "Choose a community"}
-                </option>
-                {communities.map((community) => (
-                    <option key={community} value={community}>
-                        {community}
-                    </option>
-                ))}
-            </select>
+                <div className="items">
+                    <p>Select your community to get started.</p>
 
-            {error && (
-                <div role="alert">
-                    <p>Couldn’t load communities: {error}</p>
-                    <p>Check that the backend is running, then try again.</p>
-                    <button
-                        type="button"
-                        onClick={() => setRetryCount((count) => count + 1)}
-                    >
-                        Try again
-                    </button>
+                    <div className="selection-box">
+                        {/* <label htmlFor="community-select">Select Community</label> */}
+                        <select
+                            id="community-select"
+                            value={selectedCommunity}
+                            onChange={handleCommunityChange}
+                            disabled={isLoading || communities.length === 0}
+                        >
+                            <option value="">
+                                {isLoading ? "Loading communities..." : "Choose a community"}
+                            </option>
+                            {communities.map((community) => (
+                                <option key={community} value={community}>
+                                    {community}
+                                </option>
+                            ))}
+                        </select>
+
+                        <div>
+                            <button
+                                type="button"
+                                disabled={!selectedCommunity}
+                                onClick={() => navigate("/home")}
+                            >
+                                Continue
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            )}
 
-            {!isLoading && !error && communities.length === 0 && (
-                <p>No communities found. Import tree data into the backend first.</p>
-            )}
+                {error && (
+                    <div role="alert">
+                        <p>Couldn’t load communities: {error}</p>
+                        <p>Check that the backend is running, then try again.</p>
+                        <button
+                            type="button"
+                            onClick={() => setRetryCount((count) => count + 1)}
+                        >
+                            Try again
+                        </button>
+                    </div>
+                )}
 
-            {selectedCommunity && (
-                <p>You have selected community {selectedCommunity} in Calgary.</p>
-            )}
+                {!isLoading && !error && communities.length === 0 && (
+                    <p>No communities found. Import tree data into the backend first.</p>
+                )}
 
-            <button
-                type="button"
-                disabled={!selectedCommunity}
-                onClick={() => navigate("/home")}
-            >
-                Continue
-            </button>
+                {/* {selectedCommunity && (
+                    <p>You have selected community {selectedCommunity} in Calgary.</p>
+                )} */}
+            </div>
         </main>
     );
 }

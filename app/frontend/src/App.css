@@ -1,20 +1,66 @@
+.welcome-main {
+  height: 100vh;
+}
+
+.title {
+  padding: 0 5px;
+  background-color: #F6F9AC;
+  color: #04050A;
+  font-size: 50px;
+  font-weight: 700;
+}
+
 .welcome-page {
+  /* Background image code start */
+  background-image: url('./assets/welcome.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: calc(100% - 45px);
+  /* Background image code end */
+
+  padding-top: 45px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  max-width: 560px;
-  margin: 48px auto;
-  padding: 24px;
+  align-items: center;
+  gap: 5px;
+
+  .items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+
+    p {
+      padding: 0 145px 0 55px;
+      font-size: 20px;
+    }
+  }
+
+  .selection-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
 }
 
 .welcome-page select {
-  min-width: 240px;
-  padding: 8px;
+  width: 273px;
+  padding: 10px;
+  background-color: #FEFFDB;
 }
 
 .welcome-page button {
+  border: none;
+  border-radius: 20px;
   padding: 8px 16px;
+  background-color: #456B19;
+  color: #FFF;
+
+  font-size: medium;
+  font-family: "Aleo", serif;
+  font-weight: 700;
 }
 
 .welcome-page button:disabled {
