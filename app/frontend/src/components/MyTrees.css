@@ -1,29 +1,58 @@
 .my-trees-page {
     padding: 0 10px;
+    height: calc(100vh - 120px);
+    overflow-y: scroll;
 }
 
 .my-trees-page h1 {
     color: #263b04;
 }
 
-/* .top {
-    text-align: center;
-} */
+.routesBox {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: white;
+}
+
+.routeBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 15px;
+    background-color: #351903;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.routeInfoBox {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .routeDate {
+        background-color: white;
+        flex-grow: 0;
+        font-weight: 700;
+        color: #04050A;
+        font-size: 18.5px;
+    }
+}
 
 .treeBox {
+    width: 52%;
+
     background-color: #925E08;
     color: white;
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 4%;
-    margin: 8px;
-    border-radius: 8px;
+    flex-shrink: 0;
 }
 
 .treeBox>div {
     display: flex;
-
 }
 
 .buttonBox {
@@ -59,4 +88,9 @@
     background-color: transparent;
     color: white;
     text-align: left;
+}
+
+.reportBox a {
+    color: inherit;
+    text-decoration: none;
 }
