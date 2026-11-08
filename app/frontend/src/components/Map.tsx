@@ -79,6 +79,42 @@ function Map() {
         "";
     const commonName =
         searchParams.get("common_name") || storedChallenge?.common_name || "";
+    const [locationStatus, setLocationStatus] = useState<
+        "idle" | "requesting" | "success" | "error"
+    >("idle");
+    const [locationMessage, setLocationMessage] = useState("");
+
+    function verifyLocation() {
+        if (!navigator.geolocation) {
+            setLocationStatus("error");
+            setLocationMessage("Location is not supported by this browser.");
+            return;
+        }
+
+        setLocationStatus("requesting");
+        setLocationMessage("");
+        navigator.geolocation.getCurrentPosition(
+            () => {
+                setLocationStatus("success");
+                setLocationMessage(
+                    "You are at the tree! Do you want find another one?",
+                );
+            },
+            (error) => {
+                setLocationStatus("error");
+                if (error.code === error.PERMISSION_DENIED) {
+                    setLocationMessage(
+                        "Location permission was denied. Allow location access in your browser settings to try again.",
+                    );
+                } else if (error.code === error.POSITION_UNAVAILABLE) {
+                    setLocationMessage("Your current location could not be determined.");
+                } else {
+                    setLocationMessage("The location request timed out. Please try again.");
+                }
+            },
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 },
+        );
+    }
 
     // Calculates the average latitude and longitude whenever the trees array changes
     useEffect(() => {
@@ -194,6 +230,24 @@ function Map() {
                     {communityCode ? ` in ${communityCode}` : ""}
                 </div>
             )}
+
+            <section className="location-verification" aria-label="Location verification">
+                <button
+                    className="location-verification-button"
+                    type="button"
+                    onClick={verifyLocation}
+                    disabled={locationStatus === "requesting"}
+                >
+                    {locationStatus === "requesting"
+                        ? "Requesting location..."
+                        : "Verify I'm at a tree"}
+                </button>
+                <p className={`location-verification-message is-${locationStatus}`} role="status" aria-live="polite">
+                    {locationStatus === "idle"
+                        ? "Your browser will ask permission to access your location."
+                        : locationMessage}
+                </p>
+            </section>
 
             <MapContainer center={center} zoom={16} scrollWheelZoom={false}>
                 <TileLayer
