@@ -1,0 +1,22 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 560px;
+  margin: 48px auto;
+  padding: 24px;
+}
+
+.welcome-page select {
+  min-width: 240px;
+  padding: 8px;
+}
+
+.welcome-page button {
+  padding: 8px 16px;
+}
+
+.welcome-page button:disabled {
+  cursor: not-allowed;
+}
