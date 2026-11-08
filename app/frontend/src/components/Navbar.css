@@ -1,36 +1,80 @@
 .navbar {
-    background-color: #538417;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
-    height: 100px;
-    border: #F6F9AC 5px solid;
-}
-
-.navtab:not(:last-child) {
-    border-right: #F6F9AC 5px solid;
+    align-items: flex-end;
+    gap: 8px;
+    min-height: 76px;
+    padding: 16px 24px 0;
+    border-bottom: 5px solid #f6f9ac;
+    background: #538417;
+    box-sizing: border-box;
 }
 
 .navtab {
+    position: relative;
     display: flex;
-    flex: 1;
-    flex-direction: row;
-    justify-content: center;
+    flex: 0 1 180px;
+    min-height: 52px;
     align-items: center;
-
-    text-align: center;
-    color: #04050A;
-    text-decoration: none;
-    font-size: 6.5vw;
+    justify-content: center;
+    margin-bottom: -5px;
+    padding: 10px 24px 12px;
+    border: 3px solid #f6f9ac;
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+    background: #a9c54d;
+    color: #04050a;
+    font-size: clamp(1.1rem, 2.5vw, 1.65rem);
     font-weight: 700;
-
-    >* {
-        width: 100%;
-        height: 100%;
-    }
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 150ms ease, min-height 150ms ease;
 }
 
-.navtab:has(.active) {
-    background-color: #a9c54d;
+.navtab:hover {
+    background: #c4d878;
+}
+
+.navtab:focus-visible {
+    z-index: 1;
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+.navtab-active {
+    z-index: 1;
+    min-height: 62px;
+    background: #feffdb;
+}
+
+.navtab-active:hover {
+    background: #feffdb;
+}
+
+.navtab-active::after {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    left: 0;
+    height: 5px;
+    background: #feffdb;
+    content: "";
+}
+
+@media (max-width: 520px) {
+    .navbar {
+        gap: 4px;
+        min-height: 64px;
+        padding: 12px 10px 0;
+    }
+
+    .navtab {
+        flex: 1 1 0;
+        min-height: 46px;
+        padding: 8px 10px;
+    }
+
+    .navtab-active {
+        min-height: 54px;
+    }
 }
